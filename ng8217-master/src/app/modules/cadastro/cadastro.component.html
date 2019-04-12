@@ -1,0 +1,54 @@
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+    <cmail-header></cmail-header>
+    <main class="mdl-layout__content">
+      <div class="page-content">
+        <div class="mdl-grid">
+          <form [formGroup]="formCadastro"  (ngSubmit)="handleCadastrarUsuario()" >
+
+            <cmail-form-group idCampo="nome"  [ctrl]="formCadastro.get('nome')">
+              <input required type="text" name="nome" cmailFormField formControlName="nome" required>
+              <span class="mdl-textfield__error" *ngIf="formCadastro.get('nome').getError('required')">Informar um nome é obrigatório!</span>
+              <span class="mdl-textfield__error" *ngIf="formCadastro.get('nome').getError('minlength')">O nome deve conter ao menos 2 caracteres</span>
+            </cmail-form-group>
+
+            <cmail-form-group idCampo="username" [ctrl]="formCadastro.get('username')" >
+              <input required type="text" name="username" cmailFormField formControlName="username" required > 
+              <span class="mdl-textfield__error" *ngIf="formCadastro.get('username').getError('required')" >Criar um username é obrigatório!</span>
+              <span class="mdl-textfield__error"  *ngIf="formCadastro.get('username').getError('minlength')">O username deve conter ao menos 4 caracteres</span>
+
+            </cmail-form-group>
+
+
+            <cmail-form-group idCampo="senha"  [ctrl]="formCadastro.get('senha')">
+              <input required type="password" name="senha" cmailFormField formControlName="senha" required>
+              <span class="mdl-textfield__error" *ngIf="formCadastro.get('senha').getError('required')" >Informar uma senha é obrigatório!</span>
+              <span class="mdl-textfield__error" *ngIf="formCadastro.get('senha').getError('minlength')">A senha deve conter ao menos 6 caracteres</span>
+
+            </cmail-form-group>
+
+            <cmail-form-group idCampo="telefone"  [ctrl]="formCadastro.get('telefone')">
+              <input required type="number" name="telefone" cmailFormField formControlName="telefone" required minlength="8" maxlength="10">
+              <span class="mdl-textfield__error" *ngIf="formCadastro.get('telefone').getError('required')" >Informar uma senha é obrigatório!</span>
+              <span class="mdl-textfield__error" *ngIf="formCadastro.get('telefone').getError('pattern')">Telefone errado</span>
+
+            </cmail-form-group>
+
+            {{formCadastro.get('telefone').errors | json}}
+
+            <cmail-form-group idCampo="avatar" [ctrl]="formCadastro.get('avatar')">
+              <input required type="text" name="avatar" cmailFormField formControlName="avatar" >
+              <span class="mdl-textfield__error" *ngIf="formCadastro.get('avatar').getError('required')">Informar um avatar é obrigatório!</span>
+
+            </cmail-form-group>
+  
+            <div class="mdl-card__actions">
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
+                Cadastrar
+              </button>
+            </div>
+  
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
