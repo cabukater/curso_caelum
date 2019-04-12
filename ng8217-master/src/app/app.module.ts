@@ -1,3 +1,4 @@
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -10,8 +11,7 @@ import { CaixaDeEntradaComponent } from './modules/caixa-de-entrada/caixa-de-ent
 import { ModuloRoteamento } from './app.routes';
 import { FormGroupComponent } from './components/form-group/form-group.component';
 import { FormFieldDirective } from './components/form-group/form-field-directive.directive';
-import{HttpClient} from '@angular/common/http';
-import { from } from 'rxjs';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -28,7 +28,7 @@ import { from } from 'rxjs';
     FormsModule,
     ReactiveFormsModule,
     ModuloRoteamento,
-    HttpClient
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
