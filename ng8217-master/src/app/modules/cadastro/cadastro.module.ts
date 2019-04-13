@@ -1,12 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { CadastroComponent } from './cadastro.component';
+import { SharedComponentsModule } from 'src/app/components/shared-components.module';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    CadastroComponent
+  ],
   imports: [
     CommonModule,
-    ReactiveFormsModule 
+    SharedComponentsModule,
+    ReactiveFormsModule,
+    FormsModule,
   ]
 })
 export class CadastroModule { }
