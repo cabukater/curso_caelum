@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'cmail-login',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styles: []
 })
 export class LoginComponent implements OnInit {
+   
+  username = this.rotaAtiva.snapshot.params.username
 
-  constructor() { }
+  constructor( private rotaAtiva: ActivatedRoute) { }
 
   ngOnInit() {
+     
+    console.log(this.rotaAtiva.snapshot.params.username);
+
   }
 
 }

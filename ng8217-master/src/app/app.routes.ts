@@ -6,6 +6,7 @@ import { CaixaDeEntradaComponent } from './modules/caixa-de-entrada/caixa-de-ent
 const listaDeRotas:Routes = [
     {path: '', component: LoginComponent},
     {path: 'login', component: LoginComponent},
+    {path: 'login/:username', component: LoginComponent},
     {path: 'cadastro', component: CadastroComponent},
     {path: 'inbox', component: CaixaDeEntradaComponent},
     {path: '**', redirectTo: 'login'}

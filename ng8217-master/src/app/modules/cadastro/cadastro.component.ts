@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient, HttpResponseBase, HttpErrorResponse } from '@angular/common/http';
 import { map, catchError } from "rxjs/operators";
+import { User } from 'src/app/models/dto/input/user';
+import { Router } from '@angular/router';
+
+
 
 @Component({
   selector: 'cmail-cadastro',
@@ -9,6 +13,7 @@ import { map, catchError } from "rxjs/operators";
   styles: []
 })
 export class CadastroComponent implements OnInit {
+
 
   nome = new FormControl('', [Validators.required, Validators.minLength(2)]);
   username = new FormControl('', [Validators.required, Validators.minLength(3)]);
@@ -24,7 +29,9 @@ export class CadastroComponent implements OnInit {
     telefone: this.telefone
   })
 
-  constructor(private ajax: HttpClient) {}
+
+
+  constructor(private ajax: HttpClient, private roteador: Router) {}
 
   ngOnInit() {}
 
@@ -48,19 +55,25 @@ export class CadastroComponent implements OnInit {
   }
 
   handleCadastrarUsuario(){
-
+ 
     if(this.formCadastro.invalid){
       this.validaTodosCampos(this.formCadastro)
       return
     }
 
-let dados ={
-  name : this.formCadastro.get()
-}
+  const user = new User(this.formCadastro.value)
+
+  console.log(user);
 
   this.ajax
-       .post('http://localhost:3200/users', this.formCadastro.value)
-       .subscribe()
+       .post('http://localhost:3200/users', user)
+       .subscribe(
+         (resposta) => {
+           this.roteador.navigate(['login', this.formCadastro.get('username').value]);
+                      
+         }, erro => console.log(erro)
+        
+       )
     
   }
 
