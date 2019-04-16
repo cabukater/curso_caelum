@@ -7,7 +7,9 @@
         <h1 class="mdl-card__title-text">Bem vindos/as ao CMail!</h1>
       </header>
 
+      
       <form autocomplete="off" class="mdl-card__supporting-text" (ngSubmit)="handleLogin(formLogin)" #formLogin="ngForm" autocomplete="off" class="mdl-card__supporting-text">
+        <span class="mdl-text">{{mensagemErro.message}}</span>
 
         <!-- aqui os campos do formulário -->
 
@@ -19,7 +21,7 @@
           <input type="password" #password="ngModel"  [(ngModel)]="login.password" name="password" cmailFormField required >
           <span> Informar uma senha obrigatorio</span>
         </cmail-form-group>
-
+      
         <div class="mdl-card__actions mdl-card--border">
           <a routerLink="cadastro" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
             Primeiro login? Cadastre-se!

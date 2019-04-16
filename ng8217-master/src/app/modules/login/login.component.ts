@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpResponseBase, HttpErrorResponse } from '@angular/common/http';
 import { NgForm, FormGroup, FormControl } from '@angular/forms';
 
@@ -14,13 +14,15 @@ export class LoginComponent implements OnInit {
     email: '',
     password: ''
   };
-
+mensagemErro = '';
 
   username = '';
 
   constructor(
     private rotaAtiva: ActivatedRoute,
-    private httpClient: HttpClient) { }
+    private httpClient: HttpClient,
+    private roteador: Router
+    ) { }
 
   ngOnInit() {
     this.username = this.rotaAtiva.snapshot.params.username
@@ -37,13 +39,15 @@ export class LoginComponent implements OnInit {
       this.httpClient
         .post('http://localhost:3200/login', this.login)
         .subscribe(
-          (response) => {
-            console.log(response);
-            console.log('funcionou');
+          (response : any ) => {
+
+            localStorage.setItem('token',response.token);
+            this.roteador.navigate(['inbox'])
+
           },
-          (error) => {
-            console.log(error);
-            console.log('errado');
+          (responseError:HttpErrorResponse) => {
+              this.mensagemErro = responseError.error
+
           }
         )
     }
