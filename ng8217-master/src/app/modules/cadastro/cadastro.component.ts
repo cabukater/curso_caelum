@@ -4,6 +4,7 @@ import { HttpClient, HttpResponseBase, HttpErrorResponse } from '@angular/common
 import { map, catchError } from "rxjs/operators";
 import { User } from 'src/app/models/dto/input/user';
 import { Router } from '@angular/router';
+import {CadastroService} from './../../services/cadastro.service'
 
 
 
@@ -31,7 +32,10 @@ export class CadastroComponent implements OnInit {
 
 
 
-  constructor(private ajax: HttpClient, private roteador: Router) {}
+  constructor(
+    private ajax: HttpClient,
+     private roteador: Router,
+     private servico : CadastroService) {}
 
   ngOnInit() {}
 
@@ -65,10 +69,9 @@ export class CadastroComponent implements OnInit {
 
   console.log(user);
 
-  this.ajax
-       .post('http://localhost:3200/users', user)
+  this.servico.cadastrar(this.formCadastro)
        .subscribe(
-         (resposta) => {
+         () => {
            this.roteador.navigate(['login', this.formCadastro.get('username').value]);
                       
          }, erro => console.log(erro)

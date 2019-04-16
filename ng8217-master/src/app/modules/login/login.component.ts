@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpResponseBase, HttpErrorResponse } from '@angular/common/http';
 import { NgForm, FormGroup, FormControl } from '@angular/forms';
+import {LoginService} from './../../services/login.service'
+
 
 @Component({
   selector: 'cmail-login',
@@ -20,8 +22,9 @@ mensagemErro = '';
 
   constructor(
     private rotaAtiva: ActivatedRoute,
-    private httpClient: HttpClient,
-    private roteador: Router
+
+    private roteador: Router,
+    private loginService : LoginService
     ) { }
 
   ngOnInit() {
@@ -36,12 +39,9 @@ mensagemErro = '';
     }
 
     if (formLogin.valid) {
-      this.httpClient
-        .post('http://localhost:3200/login', this.login)
+       this.loginService.autenticar(this.login)
         .subscribe(
-          (response : any ) => {
-
-            localStorage.setItem('token',response.token);
+          ( ) => {
             this.roteador.navigate(['inbox'])
 
           },
@@ -52,5 +52,6 @@ mensagemErro = '';
         )
     }
   }
+
 
 }
