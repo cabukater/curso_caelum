@@ -13,6 +13,9 @@
           "prefix": "cmail",
           "inlineStyle": true,
           "spec": false
+        },
+        "@schematics/angular:module": {
+          "flat": true
         }
       },
       "architect": {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -8,13 +8,13 @@ import { FormControl } from '@angular/forms';
 })
 export class FormGroupComponent implements OnInit {
 
-  @Input() idCampo = '';
+ @Input('') idCampo = '';
   @Input('ctrl') controle : FormControl;
 
   constructor() { }
 
   ngOnInit() {
-    console.log(this.controle)
+    
   }
 
 }
