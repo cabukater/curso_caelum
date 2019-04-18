@@ -1,19 +1,16 @@
 import { NgModule } from '@angular/core';
-import { CadastroComponent } from './cadastro.component';
 import { Routes, RouterModule } from '@angular/router';
+import { CadastroComponent } from './cadastro.component';
 
-const rotasDoModulo : Routes = [
+const rotasDoModulo:Routes = [
   {path: '', component: CadastroComponent}
-
 ]
 
-
 @NgModule({
-  declarations: [],
   imports: [
     RouterModule.forChild(rotasDoModulo)
   ],
-  exports:[
+  exports: [
     RouterModule
   ]
 })

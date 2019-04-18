@@ -7,7 +7,7 @@ import { FormFieldDirective } from './form-group/form-field-directive.directive'
 
 @NgModule({
   declarations: [
-    HeaderComponent, 
+    HeaderComponent,
     FormGroupComponent,
     FormFieldDirective
   ],
@@ -15,7 +15,7 @@ import { FormFieldDirective } from './form-group/form-field-directive.directive'
     CommonModule,
     RouterModule
   ],
-  exports:[
+  exports: [
     HeaderComponent,
     FormGroupComponent,
     FormFieldDirective

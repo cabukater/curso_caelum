@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient, HttpResponseBase, HttpErrorResponse } from '@angular/common/http';
-import { NgForm, FormGroup, FormControl } from '@angular/forms';
-import {LoginService} from './../../services/login.service'
-
+import { NgForm } from '@angular/forms';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'cmail-login',
@@ -12,46 +11,40 @@ import {LoginService} from './../../services/login.service'
 })
 export class LoginComponent implements OnInit {
 
+  mensagemErro = '';
+  username = '';
   login = {
     email: '',
     password: ''
-  };
-mensagemErro = '';
+  }
 
-  username = '';
-
-  constructor(
-    private rotaAtiva: ActivatedRoute,
-
-    private roteador: Router,
-    private loginService : LoginService
-    ) { }
+  constructor(private rotaAtiva: ActivatedRoute
+              ,private servico: LoginService
+              ,private roteador: Router) { }
 
   ngOnInit() {
-    this.username = this.rotaAtiva.snapshot.params.username
-
+    this.username = this.rotaAtiva.snapshot.params.username;
   }
 
-  handleLogin(formLogin: NgForm) {
-    if(formLogin.invalid){
-       formLogin.control.get('password').markAsTouched();
-       return
+  handleLogin(form: NgForm){
+
+    if(form.invalid){
+      form.control.get('password').markAsTouched();
+      return
     }
 
-    if (formLogin.valid) {
-       this.loginService.autenticar(this.login)
-        .subscribe(
-          ( ) => {
-            this.roteador.navigate(['inbox'])
-
-          },
-          (responseError:HttpErrorResponse) => {
-              this.mensagemErro = responseError.error
-
-          }
-        )
-    }
+    this.servico
+      .autenticar(this.login)
+      .subscribe(
+        () => {
+          this.roteador.navigate(['/inbox'])
+        }
+        , (responseError: HttpErrorResponse) => {
+          this.mensagemErro = responseError.error
+          console.log(responseError);
+        }
+      )
+    
   }
-
 
 }

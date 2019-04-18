@@ -2,6 +2,7 @@
 import { HttpClient } from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
+import { User } from '../models/dto/input/user';
 
 @Injectable()
 export class CadastroService {
@@ -13,4 +14,6 @@ export class CadastroService {
     let user = new User(dadosForm)
     return this.http.post(this.url, dadosForm)
   
+}
+
 }

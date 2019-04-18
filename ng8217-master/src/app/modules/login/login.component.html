@@ -7,21 +7,25 @@
         <h1 class="mdl-card__title-text">Bem vindos/as ao CMail!</h1>
       </header>
 
-      
-      <form autocomplete="off" class="mdl-card__supporting-text" (ngSubmit)="handleLogin(formLogin)" #formLogin="ngForm" autocomplete="off" class="mdl-card__supporting-text">
-        <span class="mdl-text">{{mensagemErro.message}}</span>
+      <form #formLogin="ngForm" (ngSubmit)="handleLogin(formLogin)" autocomplete="off" class="mdl-card__supporting-text">
+        
+        <section *ngIf="mensagemErro" class="mdl-textfield is-invalid">
+          <p class="mdl-textfield__error">
+            {{mensagemErro.message}}
+          </p>
+        </section>
 
         <!-- aqui os campos do formulário -->
-
         <cmail-form-group [ctrl]="email" idCampo="email">
-          <input type="email" #email="ngModel" [(ngModel)]="login.email" name="email"  cmailFormField required autofocus>
-          <span> Informar um email obrigatorio</span>
+          <input [(ngModel)]="login.email" #email="ngModel" type="email" name="email" required autofocus cmailFormField>
+          <span class="mdl-textfield__error">Informar um email é obrigatório!</span>
         </cmail-form-group>
-        <cmail-form-group [ctrl]="password"  idCampo="senha">
-          <input type="password" #password="ngModel"  [(ngModel)]="login.password" name="password" cmailFormField required >
-          <span> Informar uma senha obrigatorio</span>
+
+        <cmail-form-group [ctrl]="password" idCampo="senha">
+          <input [(ngModel)]="login.password" #password="ngModel" type="password" name="password" required autofocus cmailFormField>
+          <span class="mdl-textfield__error">Informar uma senha é obrigatório!</span>
         </cmail-form-group>
-      
+
         <div class="mdl-card__actions mdl-card--border">
           <a routerLink="/cadastro" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
             Primeiro login? Cadastre-se!

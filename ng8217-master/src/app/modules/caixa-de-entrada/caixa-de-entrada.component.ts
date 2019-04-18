@@ -1,11 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Email } from '../../models/email';
 import { NgForm } from '@angular/forms';
+import { EmailService } from 'src/app/services/email.service';
 
 @Component({
   selector: 'cmail-caixa-de-entrada',
   templateUrl: './caixa-de-entrada.component.html',
-  styles: []
+  styles: [`
+    ul, li {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      flex-grow: 1;
+    }
+  `]
 })
 export class CaixaDeEntradaComponent implements OnInit {
 
@@ -16,33 +24,71 @@ export class CaixaDeEntradaComponent implements OnInit {
 
   private _isNewEmailOpen = false;
 
-  constructor() { }
+  constructor(private servico: EmailService) { }
 
-  ngOnInit() {
+  ngOnInit() { 
+    this.getListEmails();
   }
 
-  get isNewEmailOpen(){
+  get isNewEmailOpen() {
     return this._isNewEmailOpen;
   }
 
-  toggleNewEmailForm(){
+  toggleNewEmailForm() {
     this._isNewEmailOpen = !this.isNewEmailOpen;
   }
 
-  handleNewEmail(formEmail: NgForm){
+  handleNewEmail(formEmail: NgForm) {
 
-    if(formEmail.invalid){
+    if (formEmail.invalid) {
       formEmail.control.get('para').markAsTouched()
       formEmail.control.get('assunto').markAsTouched()
 
       return;
     }
 
-    this.emailList.push(this.email)
-    this.email = new Email();
-    formEmail.resetForm();
-    this.toggleNewEmailForm();
+    this.servico
+      .enviar(this.email)
+      .subscribe(
+        (email) => {
+          console.log(email);
 
+          this.emailList.push(email)
+
+          this.email = new Email();
+          formEmail.resetForm();
+          this.toggleNewEmailForm();
+
+        }
+        , erro => console.log(erro)
+      )
+    //...
+
+  }
+
+  getListEmails(){
+    this.servico.listar()
+    .subscribe(
+      (listaDeEmails: Email[]) => {
+        this.emailList = listaDeEmails;
+      }
+    )
+    
+  }
+
+  handleRemoveEmail(eventoVaiRemover, email){
+
+   if (eventoVaiRemover.status === 'removing'){
+
+    this.servico.deletar(email.id)
+    .subscribe(
+      (response) =>  {
+         console.log(response);
+         console.log(this.emailList.indexOf(email));
+         this.emailList.splice(this.emailList.indexOf(email), 1)
+      }
+    )
+   }
   }
 
 }

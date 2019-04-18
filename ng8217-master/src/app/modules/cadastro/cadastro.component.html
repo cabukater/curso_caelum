@@ -2,8 +2,10 @@
     <cmail-header></cmail-header>
     <main class="mdl-layout__content">
       <div class="page-content">
+
         <div class="mdl-grid">
-          <form [formGroup]="formCadastro"  (ngSubmit)="handleCadastrarUsuario()" >
+          <form [formGroup]="formCadastro" (ngSubmit)="handleCadastrarUsuario()">
+
             <cmail-form-group [ctrl]="nome" idCampo="nome">
               <input formControlName="nome" required type="text" name="nome" cmailFormField>
               <span *ngIf="nome.getError('required')" class="mdl-textfield__error">Informar um nome é obrigatório!</span>
@@ -20,7 +22,15 @@
               <input formControlName="senha" required type="password" name="senha" cmailFormField>
               <span class="mdl-textfield__error">Informar uma senha é obrigatório!</span>
             </cmail-form-group>
-            
+
+            <cmail-form-group idCampo="avatar" [ctrl]="formCadastro.get('avatar')">
+              <input formControlName="avatar" required type="text" name="avatar" cmailFormField>
+              <span *ngIf="avatar.hasError('required')" class="mdl-textfield__error">Informar um avatar é obrigatório!</span>
+              <span *ngIf="avatar.status == 'PENDING'" class="mdl-textfield__error">Verificando URL ...</span>
+              <span *ngIf="avatar.status == 'VALID'" class="mdl-textfield__error mdl-textfield__valid">URL válida ✅</span>
+              <span *ngIf="avatar.hasError('urlInvalida')" class="mdl-textfield__error">URL inválida, tente outra 🚫</span>
+            </cmail-form-group>
+  
             <cmail-form-group idCampo="telefone" [ctrl]="formCadastro.get('telefone')">
               <input formControlName="telefone" required type="tel" name="telefone" cmailFormField maxlength="10" minlength="8">
               <span *ngIf="telefone.errors" class="mdl-textfield__error">
@@ -28,14 +38,6 @@
               </span>
             </cmail-form-group>
 
-            <cmail-form-group idCampo="avatar" [ctrl]="formCadastro.get('avatar')">
-              <input required type="text" name="avatar" cmailFormField formControlName="avatar" >
-              <span class="mdl-textfield__error" *ngIf="avatar.hasError('required')"> avatar é obrigatório!</span>
-              <span class="mdl-textfield__error" *ngIf="avatar.status === 'PENDING'"> Verificando Url ..</span>
-              <span class="mdl-textfield__error" *ngIf="avatar.status === 'VALID'"> URL válida</span>
-              <span class="mdl-textfield__error" *ngIf="avatar.hasError('urlInvalida')"> url invalida</span>
-            </cmail-form-group>
-  
             <div class="mdl-card__actions">
               <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
                 Cadastrar

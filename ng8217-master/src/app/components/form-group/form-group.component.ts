@@ -8,13 +8,12 @@ import { FormControl } from '@angular/forms';
 })
 export class FormGroupComponent implements OnInit {
 
- @Input('') idCampo = '';
-  @Input('ctrl') controle : FormControl;
+  @Input() idCampo = '';
+  @Input('ctrl') controle: FormControl;
 
   constructor() { }
 
   ngOnInit() {
-    
   }
 
 }
