@@ -5,10 +5,10 @@
         <div class="mdl-grid">
   
           <ul>
-            <li *ngFor="let email of emailList">
+            <li *ngFor="let email of  filtrarEmailsPorAssunto()">
               <cmail-list-item 
               [email]="email"
-              (eventoVaiRemover)="handleRemoveEmail($event, email)"></cmail-list-item>
+              (eventoVaiRemover)="handleRemoveEmail($event, email.id)"></cmail-list-item>
             </li>
           </ul>
                 

@@ -4,6 +4,7 @@ import { HttpClient, HttpResponseBase, HttpErrorResponse } from '@angular/common
 import { map, catchError } from "rxjs/operators";
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { PageDataService } from 'src/app/services/page.service';
 
 @Component({
   selector: 'cmail-cadastro',
@@ -15,7 +16,7 @@ export class CadastroComponent implements OnInit {
   nome = new FormControl('', [Validators.required, Validators.minLength(2)]);
   username = new FormControl('', [Validators.required, Validators.minLength(3)]);
   telefone = new FormControl('', [Validators.required, Validators.pattern('[1-9]{4}-?[0-9]{4}[0-9]?')])
-  avatar = new FormControl('',Validators.required,this.validaAvatar.bind(this))
+  avatar = new FormControl('', Validators.required, this.validaAvatar.bind(this))
 
   formCadastro = new FormGroup({
     nome: this.nome,
@@ -26,50 +27,57 @@ export class CadastroComponent implements OnInit {
   })
 
   constructor(private ajax: HttpClient
-              , private roteador: Router
-              , private servico: UserService) {}
+    , private roteador: Router
+    ,private PageService : PageDataService
+    , private servico: UserService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+       this.PageService.defineTitulo('Cadastro')
+       
+   }
 
-  validaAvatar(controle: FormControl){
-    
+  validaAvatar(controle: FormControl) {
+
     return this
-            .ajax
-            .head(controle.value, {observe: 'response'})
-            .pipe(
-              map((resposta: HttpResponseBase) => {
-                return resposta.ok
-              })
-              ,
-              catchError(
-                (error: HttpErrorResponse) => {
-                  return [{urlInvalida: true}]
-                }
-              )
-            ) 
+      .ajax
+      .head(controle.value, { observe: 'response' })
+      .pipe(
+        map((resposta: HttpResponseBase) => {
+          return resposta.ok
+        })
+        ,
+        catchError(
+          (error: HttpErrorResponse) => {
+            return [{ urlInvalida: true }]
+          }
+        )
+      )
   }
 
-  validaTodosCampos(form: FormGroup){
-    for(let controlName in form.value){
+  validaTodosCampos(form: FormGroup) {
+    for (let controlName in form.value) {
       form.get(controlName).markAsTouched()
-    } 
+    }this.PageService.defineTitulo('Cadastro')
   }
 
-  handleCadastrarUsuario(){
+  handleCadastrarUsuario() {
 
-    if(this.formCadastro.invalid){
+    if (this.formCadastro.invalid) {
       this.validaTodosCampos(this.formCadastro)
       return
     }
 
     this.servico
-        .cadastrar(this.formCadastro.value)
-        .subscribe(
-          () => {
-            this.roteador.navigate(['login',this.formCadastro.get('username').value])
-          }
-          , erro => console.log(erro)          
-        )
+      .cadastrar(this.formCadastro.value)
+      .subscribe(
+        () => {
+          this.roteador.navigate(['login', this.formCadastro.get('username').value])
+        }
+        , erro => console.log(erro)
+      )
   }
+
+
+
 
 }

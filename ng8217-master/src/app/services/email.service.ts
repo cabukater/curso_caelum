@@ -37,7 +37,7 @@ export class EmailService {
   }
   
 
-  listar() {
+  listar() :Observable<Email[]>{
     return this.http.get(this.url, { headers: this.cabecalho })
       .pipe<Email[]>(
         map(
@@ -56,7 +56,7 @@ export class EmailService {
         ))
   }
 
-  deletar(id){
+  deletar(id): Observable<Object>{
     return this.http.delete(`${this.url}/${id}`, {
       headers:this.cabecalho
     })

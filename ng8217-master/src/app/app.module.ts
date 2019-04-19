@@ -10,7 +10,8 @@ import { ModuloRoteamento } from './app-routing.module';
   ],
   imports: [
     BrowserModule,
-    ModuloRoteamento
+    ModuloRoteamento,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
