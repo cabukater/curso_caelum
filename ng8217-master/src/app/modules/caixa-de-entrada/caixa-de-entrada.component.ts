@@ -60,7 +60,7 @@ export class CaixaDeEntradaComponent implements OnInit {
         (email) => {
           console.log(email);
 
-          this.emailList.push(email)
+          this.emailList.unshift(email)
 
           this.email = new Email();
           formEmail.resetForm();
@@ -101,8 +101,14 @@ export class CaixaDeEntradaComponent implements OnInit {
   filtrarEmailsPorAssunto(){
     const termoParaFiltroEmMinusculo = this.termoDeFiltro.toLowerCase()
     return this.emailList.filter( email => {
-      const assunto = email.assunto.toLowerCase()
-      return assunto.includes(termoParaFiltroEmMinusculo)
+
+      if (email.assunto.toLowerCase().includes(this.termoDeFiltro.toLowerCase())||
+      email.destinatario.toLowerCase().includes(this.termoDeFiltro.toLowerCase()) ||
+      email.conteudo.toLowerCase().includes(this.termoDeFiltro.toLowerCase())
+      ){
+        return email
+      }
+     
     })
   }
 
